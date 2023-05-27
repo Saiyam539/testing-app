@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block css %}
+  <style>
+    .table{
+      font-size: 2.5vh;
+      margin-top: 7vh;
+    }
+    .add_btn{
+      background-color: black;
+      color: white;
+      padding: 2vh;
+      text-decoration: none;
+      border-radius: 10px;
+    }
+    .add_btn:hover{
+      background-color: rgb(77, 76, 76);
+      transition: 200ms;
+      color: white;
+    }
+    .dot {
+      height: 25px;
+      width: 25px;
+      background-color: red;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    thead{
+      text-align:center;
+    }
+    tbody{
+      text-align:center;
+    }
+    @media only screen and (max-width: 898px) {
+      .button{
+        padding: 1vh;
+        width: 56px;
+        font-size: small;
+      }
+    }
+  </style>
+{% endblock %}
+{% block body %}
+<h1 style="text-align:center; margin:20px;">Welcome {{user}}!!</h1>
+<h2 style="text-align:center; margin:20px;">Here is your ToDo list</h2>
+<div style="text-align:center; margin:20px; margin-top:40px;"><a href="/add_task"  class="add_btn">Add Task</a></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="color:rgb(240, 11, 11); font-size:2.5vh;" scope="col">Task</th>
+        <th style="color:rgb(240, 11, 11); font-size:2.5vh;" scope="col">Description</th>
+        <th style="color:rgb(240, 11, 11); font-size:2.5vh;" scope="col">Status</th>
+        <th style="color:rgb(240, 11, 11); font-size:2.5vh;" scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in todos %}
+      <tr>
+        <td>{{task.task}}</td>
+        <td style="width:60vh; text-align:left;">{{task.desc}}</td>
+        {% if task.complete %}
+        <td><h3 style="color:rgb(0, 167, 0);">&check;</h3></td>
+        {% else %}
+        <td><span class="dot"></span></td>
+        {% endif %}
+        
+        <td>
+          <a href="{% url 'edit_item' task.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'delete_item' task.id %}" onclick="return confirm('Are you ready to delete this record ?')" class="button btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

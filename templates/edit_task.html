@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    .container{
+        background-color: rgb(221, 221, 221);
+        padding: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 130px;
+        width: fit-content;
+        border-radius: 20px;
+    }
+    .container div{
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+    }
+    .container .btn {
+        width: 60%;
+
+        border: none;
+        border-bottom: 1px solid #000;
+        background: transparent;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .container .btn[type="submit"] {
+        border: none;
+        outline: none;
+        height: 40px;
+        background: #000;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 20px;
+        margin-left:137px;
+    }
+
+    .container .btn[type="submit"]:hover {
+        cursor: pointer;
+        background: #fff;
+        color: #000;
+    }
+    .input{
+        padding: 10px;
+        border-radius: 10px;
+        width: 41rem;
+    }
+    form{
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .check {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 2.4vh;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      /* Hide the browser's default checkbox */
+      .check input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      
+      /* Create a custom checkbox */
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+      }
+      
+      /* On mouse-over, add a grey background color */
+      .check:hover input ~ .checkmark {
+        background-color: #ccc;
+      }
+      
+      /* When the checkbox is checked, add a blue background */
+      .check input:checked ~ .checkmark {
+        background-color: #2196F3;
+      }
+      
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      
+      /* Show the checkmark when checked */
+      .check input:checked ~ .checkmark:after {
+        display: block;
+      }
+      
+      /* Style the checkmark/indicator */
+      .check .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+</style>
+{% endblock css %}
+
+
+{% block body %}
+
+<div class="container">
+    <h1>Edit Task</h1>
+  <form method="POST" class="login">
+    {% csrf_token %}
+    <div>
+        <label class="form-label">Task</label>
+        <input type="text" class="input" name="task" value='{{todo_item.task}}' required>
+    </div>
+    <div>
+        <label class="form-label">Description</label>
+        <input type="text" class="input" name="desc" value='{{todo_item.desc}}' required>
+    </div>
+    <div>
+        <label class="check">Completed
+            {% if todo_item.complete %}
+            <input type="checkbox" class="complete" name="complete" checked>
+            {% else %}
+            <input type="checkbox" class="complete" name="complete">
+            {% endif %}
+            <span class="checkmark"></span>
+          </label>
+    </div>
+    <input class="btn" type="submit" value="Edit Task">
+  </form>
+</div>
+
+{% endblock body %}
